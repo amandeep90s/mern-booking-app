@@ -1,6 +1,16 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
+
+mongoose
+  .connect(process.env.MONGODB_CONNECTION_URI as string)
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((err) => {
+    console.log("Error connecting to MongoDB", err.message);
+  });
 
 const app = express();
 
