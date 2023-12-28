@@ -2,6 +2,7 @@ import cors from "cors";
 import "dotenv/config";
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
 
 mongoose
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
 const PORT = 7000;
