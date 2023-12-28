@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from "../api-client";
 
 export type RegisterFormData = {
   firstName: string;
@@ -9,10 +11,28 @@ export type RegisterFormData = {
 };
 
 const Register = () => {
-  const { register, watch } = useForm<RegisterFormData>();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
+
+  const mutation = useMutation(apiClient.register, {
+    onSuccess: () => {
+      console.log("Registrered successfully");
+    },
+    onError: (error: Error) => {
+      console.log(error.message);
+    },
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    mutation.mutate(data);
+  });
 
   return (
-    <form className="flex flex-col gap-5">
+    <form className="flex flex-col gap-5" onSubmit={onSubmit} method="POST">
       <h2 className="text-3xl font-bold">Create an Account</h2>
 
       <div className="flex flex-col gap-5 md:flex-row">
@@ -28,6 +48,9 @@ const Register = () => {
             autoComplete="given-name"
             {...register("firstName", { required: "This field is required" })}
           />
+          {errors.firstName && (
+            <span className="text-red-500">{errors.firstName.message}</span>
+          )}
         </label>
 
         <label
@@ -42,6 +65,9 @@ const Register = () => {
             autoComplete="family-name"
             {...register("lastName", { required: "This field is required" })}
           />
+          {errors.lastName && (
+            <span className="text-red-500">{errors.lastName.message}</span>
+          )}
         </label>
       </div>
 
@@ -54,6 +80,9 @@ const Register = () => {
           autoComplete="email"
           {...register("email", { required: "This field is required" })}
         />
+        {errors.email && (
+          <span className="text-red-500">{errors.email.message}</span>
+        )}
       </label>
 
       <label
@@ -74,6 +103,9 @@ const Register = () => {
             },
           })}
         />
+        {errors.password && (
+          <span className="text-red-500">{errors.password.message}</span>
+        )}
       </label>
 
       <label
@@ -96,6 +128,9 @@ const Register = () => {
             },
           })}
         />
+        {errors.confirmPassword && (
+          <span className="text-red-500">{errors.confirmPassword.message}</span>
+        )}
       </label>
 
       <span>
