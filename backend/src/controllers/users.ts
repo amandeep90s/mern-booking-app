@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
@@ -14,6 +15,13 @@ export const register = async (
   res: Response,
   next: NextFunction
 ) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: errors.array() });
+  }
+
   try {
     let user = await User.findOne({ email: req.body.email });
 
