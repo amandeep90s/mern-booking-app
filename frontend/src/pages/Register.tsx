@@ -20,12 +20,12 @@ const Register = () => {
           htmlFor="firstName"
           className="flex-1 text-sm font-bold text-gray-700"
         >
-          First Name
+          <span>First Name</span>
           <input
             type="text"
             id="firstName"
             className="w-full p-3 mt-2 font-normal border rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-            autoComplete="firstName"
+            autoComplete="given-name"
             {...register("firstName", { required: "This field is required" })}
           />
         </label>
@@ -34,19 +34,19 @@ const Register = () => {
           htmlFor="lastName"
           className="flex-1 text-sm font-bold text-gray-700"
         >
-          Last Name
+          <span>Last Name</span>
           <input
             type="text"
             id="lastName"
             className="w-full p-3 mt-2 font-normal border rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-            autoComplete="lastName"
+            autoComplete="family-name"
             {...register("lastName", { required: "This field is required" })}
           />
         </label>
       </div>
 
       <label htmlFor="email" className="flex-1 text-sm font-bold text-gray-700">
-        Email
+        <span>Email</span>
         <input
           type="email"
           id="email"
@@ -60,12 +60,12 @@ const Register = () => {
         htmlFor="password"
         className="flex-1 text-sm font-bold text-gray-700"
       >
-        Password
+        <span>Password</span>
         <input
           type="password"
           id="password"
           className="w-full p-3 mt-2 font-normal border rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-          autoComplete="password"
+          autoComplete="new-password"
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -80,12 +80,12 @@ const Register = () => {
         htmlFor="confirmPassword"
         className="flex-1 text-sm font-bold text-gray-700"
       >
-        Confirm Password
+        <span>Confirm Password</span>
         <input
           type="password"
           id="confirmPassword"
           className="w-full p-3 mt-2 font-normal border rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-          autoComplete="confirmPassword"
+          autoComplete="new-password"
           {...register("confirmPassword", {
             validate: (val) => {
               if (!val) {
